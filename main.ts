@@ -12,6 +12,11 @@ function validateEntry(text: string): void {
   if (typeof text !== "string") {
     throw new Error("entry must be a string");
   }
+  // Gate: the entry must be a SINGLE line — a fortune slip is one line,
+  // so any newline or carriage return is rejected before any write.
+  if (text.includes("\n") || text.includes("\r")) {
+    throw new Error("entry must be a single line (no newline characters)");
+  }
   const length = [...text].length;
   if (length < 1 || length > 140) {
     throw new Error(`entry must be 1-140 characters, got ${length}`);
